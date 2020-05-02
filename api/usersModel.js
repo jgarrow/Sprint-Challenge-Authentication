@@ -14,8 +14,13 @@ async function createUser(newUser) {
     return findById(id);
 }
 
+async function getUsers() {
+    return db('users');
+}
+
 module.exports = {
     createUser,
     findById,
     findBy,
+    getUsers,
 };
