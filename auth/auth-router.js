@@ -24,7 +24,6 @@ router.post('/login', (req, res) => {
 
     userScheme
         .findBy({ username })
-        // .first()
         .then(([user]) => {
             if (user && bcrypt.compareSync(password, user.password)) {
                 req.session.userId = user.id;
@@ -36,6 +35,18 @@ router.post('/login', (req, res) => {
         .catch((err) =>
             res.status(500).json({ message: `Error logging in ${username}` })
         );
+});
+
+router.get('/logout', (req, res) => {
+    if (req.session) {
+        req.session.destroy((err) => {
+            if (err) {
+                res.send('Error logging out');
+            } else {
+                res.send('Goodbye!');
+            }
+        });
+    }
 });
 
 module.exports = router;
